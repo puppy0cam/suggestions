@@ -1,6 +1,8 @@
 import { CommandoClient } from "discord.js-commando";
 import path from "path";
-import config from "./config/config.json";
+import {loadConfig} from "./config/config"
+
+export let config = loadConfig();
 
 // Create a new commando client with provided attributes
 var bot: CommandoClient = new CommandoClient({

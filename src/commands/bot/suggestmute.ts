@@ -77,8 +77,8 @@ export = class MuteCommand extends commando.Command {
                         offence
                     ],
                 );
-    
-    
+
+
             })
                 .catch(console.error);
         }else{
@@ -94,8 +94,8 @@ export = class MuteCommand extends commando.Command {
                         offence
                     ],
                 );
-    
-    
+
+
             })
                 .catch(console.error);
         }

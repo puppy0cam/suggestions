@@ -1,14 +1,15 @@
 import { Pool, PoolClient } from 'pg';
-import config from "../config/config.json";
+import {config} from "../index"
 
 // Create a new pool for db access.
 // Database information is given in the config file.
 // Export pool so it can be used in other files
 export const pool = new Pool({
-    host: config.db_host,
-    port: config.db_port,
-    user: config.db_user,
-    password: config.db_pass,
+    host: config.database.host,
+    database: config.database.database,
+    port: config.database.port,
+    user: config.database.user,
+    password: config.database.password,
 });
 
 // Create a connection for the pool so schema and table can be created and used

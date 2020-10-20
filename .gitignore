@@ -27,3 +27,5 @@ node_modules
 config.json
 package-lock.json
 yarn.lock
+config.yml
+.idea/
