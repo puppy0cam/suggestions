@@ -12,6 +12,7 @@ var bot: CommandoClient = new CommandoClient({
 // Register bot commands
 bot.registry
     .registerGroups([
+        ["public"],
         ["staff"],
         ["logs"]
     ])

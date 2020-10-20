@@ -11,7 +11,7 @@ export = class MuteCommand extends Command {
             group: 'staff',
             memberName: 'suggestion unmute',
             userPermissions: ['MANAGE_ROLES'],
-            description: 'Remove\'s a user from the "Suggestion muted role".',
+            description: 'Remove\'s a user from the "Suggestion muted" role.',
             args: [
                 {
                     key: 'UserID',

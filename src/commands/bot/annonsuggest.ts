@@ -10,10 +10,10 @@ export = class Suggest extends Command {
         super(bot, {
             name: 'suggest',
             aliases: ['s'],
-            group: 'staff',
+            group: 'public',
             memberName: 'suggest',
             userPermissions: ['SEND_MESSAGES'],
-            description: 'Lets a user suggest something".',
+            description: 'Lets a user suggest something.',
             args: [
                 {
                     key: 'Type',
@@ -36,7 +36,7 @@ export = class Suggest extends Command {
 
         //if channel is not a dm delete so it stays anonymous
         if (msg.channel.type != "dm") {
-        msg.delete()
+            msg.delete()
         }
 
 
@@ -54,10 +54,13 @@ export = class Suggest extends Command {
         }
 
 
-        if (member.roles.cache.has("758461243752579123"))
-        {
+        if (member.roles.cache.has("758461243752579123")) {
             return msg.author.send("You are suggestion muted so you cannot make any suggestions!")
         }
+
+
+        // if (!Type) return msg.author.send("Please suggest towards one of the 3 types \n **Minecraft**, **Server**, **Event**\nUsage: `suggest <type> <suggestion>` Example: `suggest Minecraft Shop system?")
+
 
         switch (Type) {
 
@@ -92,7 +95,7 @@ export = class Suggest extends Command {
                 break;
             }
             default: {
-                msg.reply("Please suggest towards one of the 3 types \n **Minecraft**, **Server**, **Event**\nUsage: `suggest <type> <suggestion>` Example: `suggest Minecraft Shop system?")
+                msg.author.send("Please suggest towards one of the 3 types \n **Minecraft**, **Server**, **Event**\nUsage: `suggest <type> <suggestion>` Example: `suggest Minecraft Shop system?")
             }
         }
 
