@@ -1,5 +1,7 @@
 import { Pool, PoolClient } from 'pg';
-import {config} from "../index"
+import {loadConfig} from "../config/config";
+
+let config = loadConfig();
 
 // Create a new pool for db access.
 // Database information is given in the config file.

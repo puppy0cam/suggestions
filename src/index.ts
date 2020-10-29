@@ -1,11 +1,15 @@
 import { CommandoClient } from "discord.js-commando";
 import path from "path";
 import {loadConfig} from "./config/config"
+import MessageHandler from "./handler/messagehandler";
+import ReactionHandler from "./handler/reactionhandler";
+import {MessageReaction} from "discord.js";
+import {MuteLoop} from "./loops/muteloop";
 
 export let config = loadConfig();
 
 // Create a new commando client with provided attributes
-var bot: CommandoClient = new CommandoClient({
+const bot: CommandoClient = new CommandoClient({
     commandPrefix: config.prefix,
     commandEditableDuration: 10,
     nonCommandEditable: false
@@ -16,7 +20,8 @@ bot.registry
     .registerGroups([
         ["public"],
         ["staff"],
-        ["logs"]
+        ["logs"],
+        ["events"]
     ])
     .registerDefaults()
     .registerCommandsIn(path.join(__dirname, 'commands'));
@@ -26,7 +31,22 @@ bot.registry
 bot.on("ready", async () => {
     if (bot.user === null) return
     console.log(`${bot.user.tag} is online!`);
-    bot.user.setActivity('Ready to suggest mute people master!')
+    await bot.user.setActivity('your submissions', {type: "WATCHING"})
+
+    let muteloop = new MuteLoop(bot);
+    setInterval(() => {
+        muteloop.run().then(_ => _)
+    },  300000) // 5 Minutes (300000)
+})
+
+bot.on('message', async (msg) => {
+    if (msg.author == bot.user) return
+    new MessageHandler(msg, bot);
+})
+
+bot.on('messageReactionAdd', async (reaction: MessageReaction, user) => {
+    if (user == bot.user) return
+    new ReactionHandler(reaction, user, bot);
 })
 
 // login bot for given token

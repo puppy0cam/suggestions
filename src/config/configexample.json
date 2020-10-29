@@ -1,9 +1,0 @@
-{
-    "db_host": "HOST",
-    "db_port": "PORT",
-    "db_user": "DBUSER",
-    "db_pass": "DBPASS",
-    "token"  : "TOKEN",
-    "prefix" : "PREFIX",
-    "smute_role" : "ROLE ID"
-}
