@@ -56,12 +56,17 @@ export default class MessageHandler {
                     }
                 })
             });
+        } else {
+            if (![0, 4].includes(event.rows[0].restriction)) {
+                await this.msg.delete();
+                return await DMChannel.send("Sorry, this event requires an attachment.");
+            }
         }
 
         if (img != undefined) {
             // @ts-ignore
             const ext = getFileExtension(attachment.name)
-            if (!await MessageHandler.checkIfExtValid(ext, event.rows[0].restriction)) {
+            if (!MessageHandler.checkIfExtValid(ext.trim(), event.rows[0].restriction)) {
                 await this.msg.delete();
                 return await DMChannel.send("Sorry, that file extension is not allowed in the current event.\n" +
                     "If it does follow the rules try formatting it to a common extension like png or mp4");
@@ -85,7 +90,7 @@ export default class MessageHandler {
             ($1, $2, $3)", [this.msg.author.id, review_msg.id, event.rows[0].event_id])
     }
 
-    private static async checkIfExtValid(extension: string, restriction: number): Promise<boolean> {
+    private static checkIfExtValid(extension: string, restriction: number): boolean {
         // 0: No restrictions
         // 1: image only
         // 2: gif/video only
@@ -96,11 +101,11 @@ export default class MessageHandler {
             case 0:
                 return true;
             case 1:
-                return (/\|jpe?g|tiff?|png|webp|bmp$/i).test(extension);
+                return (/\.|jpe?g|tiff?|png|webp|bmp$/i).test(extension);
             case 2:
-                return (/\|gif|mp4|mov|wmv|flv$/i).test(extension);
+                return (/\.|gif|mp4|mov|wmv|flv$/i).test(extension);
             case 3:
-                return (/\|gif|mp4|mov|wmv|flv|jpe?g|tiff?|png|webp|bmp$/i).test(extension);
+                return (/\.|gif|mp4|mov|wmv|flv|jpe?g|tiff?|png|webp|bmp$/i).test(extension);
             default:
                 return false
         }

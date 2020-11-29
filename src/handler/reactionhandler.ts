@@ -1,7 +1,8 @@
-import {MessageEmbed, MessageReaction, TextChannel, User} from "discord.js";
+import {MessageAttachment, MessageEmbed, MessageEmbedImage, MessageReaction, TextChannel, User} from "discord.js";
 import {pool} from "../db/db";
 import {CommandoClient} from "discord.js-commando";
 import MuteCommand from '../commands/staff/suggestmute'
+import {getFileExtension} from "../commands/bot/utils";
 
 export default class ReactionHandler {
     private readonly reaction: MessageReaction;
@@ -31,12 +32,19 @@ export default class ReactionHandler {
         let embed = this.reaction.message.embeds[0];
         let approved: boolean;
 
+        let image_url: MessageEmbedImage;
+        if (embed.image != undefined) {
+            let file = (embed.image) as MessageEmbedImage;
+            // @ts-ignore
+            let ext = getFileExtension(file.url);
+            image_url = embed.image;
+            embed.setImage(`attachment://file.${ext}`);
+        }
+
         switch (this.reaction.emoji.name) {
             case "👍":
-                let image_url = embed.image
                 embed.color = this.green;
                 embed.title = "Approved";
-                embed.setImage("attachment://file.jpg");
                 embed.footer = {
                     text: `Approved by ${this.user.username}#${this.user.discriminator}`,
                     iconURL: this.user.displayAvatarURL()
@@ -50,7 +58,11 @@ export default class ReactionHandler {
                     timestamp: new Date(),
                     color: "BLURPLE"
                 });
-                submission_embed.setDescription(embed.description);
+                if (embed.description != null) {
+                    submission_embed.setDescription(embed.description);
+                }
+
+                // @ts-ignore
                 submission_embed.image = image_url;
                 submission_embed.author = {
                     name: "Submission",
@@ -61,9 +73,9 @@ export default class ReactionHandler {
                 break;
 
             case "👎":
+                embed.files.pop();
                 embed.color = this.red
                 embed.title = "Removed"
-                embed.setImage("attachment://file.jpg");
                 embed.footer = {
                     text: `Removed by ${this.user.username}#${this.user.discriminator}`,
                     iconURL: this.user.displayAvatarURL()
@@ -74,9 +86,9 @@ export default class ReactionHandler {
                 approved = false;
                 break;
             case "🔇":
+                embed.files.pop();
                 embed.color = this.purple;
                 embed.title = "Removed & Muted";
-                embed.setImage("attachment://file.jpg");
                 embed.footer = {
                     text: `Removed by ${this.user.username}#${this.user.discriminator}`,
                     iconURL: this.user.displayAvatarURL(),
@@ -89,6 +101,8 @@ export default class ReactionHandler {
             default:
                 return;
         }
+
+        await this.reaction.message.reactions.removeAll();
 
         await pool.query("UPDATE anon_muting.submissions \
             SET approved = $1, reviewed_by = $2 \
