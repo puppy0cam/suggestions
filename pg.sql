@@ -1,4 +1,6 @@
-create table users
+create schema if not exists anon_muting;
+
+create table if not exists anon_muting.users
 (
     user_id  text                   not null
         constraint users_pk
@@ -8,13 +10,13 @@ create table users
     muted_at timestamp
 );
 
-alter table users
+alter table anon_muting.users
     owner to current_user;
 
-create unique index users_user_id_uindex
-    on users (user_id);
+create unique index if not exists users_user_id_uindex
+    on anon_muting.users (user_id);
 
-create table events
+create table if not exists anon_muting.events
 (
     created_by             text                 not null,
     submissions_channel_id text                 not null,
@@ -27,16 +29,16 @@ create table events
     restriction            integer default 0    not null
 );
 
-alter table events
+alter table anon_muting.events
     owner to current_user;
 
-create unique index events_submissions_channel_id_uindex
-    on events (submissions_channel_id);
+create unique index if not exists events_submissions_channel_id_uindex
+    on anon_muting.events (submissions_channel_id);
 
-create unique index events_event_id_uindex
-    on events (event_id);
+create unique index if not exists events_event_id_uindex
+    on anon_muting.events (event_id);
 
-create table submissions
+create table if not exists anon_muting.submissions
 (
     submission_id     bigserial not null
         constraint submissions_pk
@@ -46,19 +48,19 @@ create table submissions
     review_message_id text      not null,
     event_id          integer   not null
         constraint submissions_events_event_id_fk
-            references events,
+            references anon_muting.events,
     reviewed_by       text
 );
 
-alter table submissions
+alter table anon_muting.submissions
     owner to current_user;
 
-create unique index submissions_review_message_id_uindex
-    on submissions (review_message_id);
+create unique index if not exists submissions_review_message_id_uindex
+    on anon_muting.submissions (review_message_id);
 
-create unique index submissions_review_message_id_uindex_2
-    on submissions (review_message_id);
+create unique index if not exists submissions_review_message_id_uindex_2
+    on anon_muting.submissions (review_message_id);
 
-create unique index submissions_submission_id_uindex
-    on submissions (submission_id);
+create unique index if not exists submissions_submission_id_uindex
+    on anon_muting.submissions (submission_id);
 
