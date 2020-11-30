@@ -14,7 +14,7 @@ export = class MuteCommand extends commando.Command {
             aliases: ['sm'],
             group: 'staff',
             memberName: 'suggestion mute',
-            userPermissions: ['MANAGE_ROLES'],
+            userPermissions: ['MANAGE_CHANNELS'],
             description: 'Mutes a user from suggestions',
             args: [
                 {

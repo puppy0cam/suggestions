@@ -11,7 +11,7 @@ export = class UserInfo extends Command {
             aliases: ['ui', 'about'],
             group: 'staff',
             memberName: 'userinfo',
-            userPermissions: ['MANAGE_ROLES'],
+            userPermissions: ['MANAGE_CHANNELS'],
             description: 'Get information about user',
             args: [
                 {

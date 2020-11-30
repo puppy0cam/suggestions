@@ -12,7 +12,7 @@ export = class UnMuteCommand extends Command {
             aliases: ['rsm'],
             group: 'staff',
             memberName: 'suggestion unmute',
-            userPermissions: ['MANAGE_ROLES'],
+            userPermissions: ['MANAGE_CHANNELS'],
             description: 'Unmute a user from suggestions',
             args: [
                 {

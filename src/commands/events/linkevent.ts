@@ -11,7 +11,7 @@ export = class CreateEvent extends Command {
             aliases: ['levent', 'event_link', 'lev', 'link'],
             group: 'events',
             memberName: 'link event',
-            userPermissions: ['MANAGE_ROLES'],
+            userPermissions: ['MANAGE_CHANNELS'],
             description: 'Link an event for submissions',
             args: [
                 {

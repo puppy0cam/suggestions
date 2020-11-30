@@ -10,7 +10,7 @@ export = class CreateEvent extends Command {
             aliases: ['sevent', 'event_stop', 'sev', 'delete_event', 'devent', 'event_delete', 'dev', 'clear'],
             group: 'events',
             memberName: 'stop event',
-            userPermissions: ['MANAGE_ROLES'],
+            userPermissions: ['MANAGE_CHANNELS'],
             description: 'Stop event for submissions',
             args: [
                 {
