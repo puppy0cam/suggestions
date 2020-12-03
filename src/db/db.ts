@@ -23,7 +23,7 @@ pool.connect((err?: Error, client?: PoolClient, rel?: (_?: any) => void) => {
     if (err) {
         return console.error('Error acquiring client', err.stack)
     }
-    // if error is undefiend then client is not.
+    // if error is undefined then client is not.
     client = client as PoolClient
 
     let errHandle = (err?: Error) => {

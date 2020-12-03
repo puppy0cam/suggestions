@@ -2,7 +2,7 @@ import {MessageAttachment, MessageEmbed, MessageEmbedImage, MessageReaction, Tex
 import {pool} from "../db/db";
 import {CommandoClient} from "discord.js-commando";
 import MuteCommand from '../commands/staff/suggestmute'
-import {getFileExtension} from "../commands/bot/utils";
+import {getFileExtension, getMember, getMuteReadableTime} from "../commands/bot/utils";
 
 export default class ReactionHandler {
     private readonly reaction: MessageReaction;
@@ -86,16 +86,25 @@ export default class ReactionHandler {
                 approved = false;
                 break;
             case "🔇":
+                // @ts-ignore
+                let member = await getMember(submission.rows[0].user_id, this.reaction.message.guild);
+                if (member === undefined) {
+                    await this.reaction.message.channel.send("Something went wrong. Please contact my dad");
+                    return
+                }
+
+                let offence = await MuteCommand.mute(member);
+
                 embed.files.pop();
+                embed.title = "Removed & Muted " + getMuteReadableTime(offence);
                 embed.color = this.purple;
-                embed.title = "Removed & Muted";
                 embed.footer = {
                     text: `Removed by ${this.user.username}#${this.user.discriminator}`,
                     iconURL: this.user.displayAvatarURL(),
                 };
 
                 await this.reaction.message.edit(embed);
-                await MuteCommand.mute(submission.rows[0].user_id);
+
                 approved = false;
                 break;
             default:
