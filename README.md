@@ -2,6 +2,7 @@
 Anonymous Suggestions Code for Floor gang 
 
 # Anon suggestions
+Permissions Required: `322640`
 ## Suggested features:
 ### - add suggestion mute role
 ### - remove suggestion role on choice
