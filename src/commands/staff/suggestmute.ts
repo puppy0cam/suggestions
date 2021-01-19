@@ -63,7 +63,12 @@ export = class MuteCommand extends commando.Command {
             "INSERT INTO anon_muting.users (user_id, muted, offence, muted_at) \
             VALUES ($1, true, $2, now()) ON CONFLICT (user_id) DO UPDATE SET muted = true, offence = $2", [member.user.id, offence])
 
-        await member.send(`You have been Suggestion muted ${getMuteReadableTime(offence)}`)
+        try {
+            await member.send(`You have been Suggestion muted ${getMuteReadableTime(offence)}`)
+        } catch (_) {
+
+        }
+
 
         return offence
     }

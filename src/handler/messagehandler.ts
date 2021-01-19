@@ -79,7 +79,11 @@ export default class MessageHandler {
 
         await this.msg.delete();
 
-        await DMChannel.send("Thanks for submitting! Your post is currently in review and will show up shortly");
+        try {
+            await DMChannel.send("Thanks for submitting! Your post is currently in review and will show up shortly");
+        } catch (_) {
+
+        }
 
         await review_msg.react('👍')
         await review_msg.react('👎')
