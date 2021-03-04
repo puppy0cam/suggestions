@@ -1,5 +1,5 @@
 {
-  "name": "user-muting",
+  "name": "suggestions",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,8 +8,8 @@
     "start": "tsc && node build/."
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "NewCircuit <https://github.com/NewCircuit>",
+  "license": "GPL-3.0",
   "dependencies": {
     "@types/concat-stream": "^1.6.0",
     "@types/js-yaml": "^3.12.5",

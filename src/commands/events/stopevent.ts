@@ -41,8 +41,5 @@ export = class CreateEvent extends Command {
         // Member that wanted to unmute didn't have enough perms to do it. Report
         // it back and delete message after a second.
         return (await msg.channel.send("Insufficient permissions to run this command."));/*.delete({timeout:utils.MILIS});/*/
-
-
-
     }
 }
