@@ -23,7 +23,7 @@ export = class CreateEvent extends Command {
           type: 'string',
         },
         {
-          key: 'review_channel',
+          key: 'reviewChannel',
           prompt: 'The channel I need to send review requests in.',
           type: 'string',
         },

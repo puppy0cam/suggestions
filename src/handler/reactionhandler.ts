@@ -41,7 +41,7 @@ export default class ReactionHandler {
       let approved: boolean;
 
       let imageUrl: MessageEmbedImage | null;
-      if (embed.image !== undefined) {
+      if (embed.image != null) {
         const file = (embed.image) as MessageEmbedImage;
         // @ts-ignore
         const ext = getFileExtension(file.url);

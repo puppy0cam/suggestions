@@ -48,7 +48,7 @@ export default class MessageHandler {
       const attachment = this.msg.attachments.first();
       let img;
 
-      if (attachment !== undefined) {
+      if (attachment != null) {
         if (event.rows[0].restriction === 4) {
           await this.msg.delete();
           await DMChannel.send('Sorry, this event is text only. No attachments allowed');
@@ -58,7 +58,7 @@ export default class MessageHandler {
         img = await new Promise((resolve) => {
           // @ts-ignore
           request.get(attachment.url, async (err: any, res: any, body: Buffer) => {
-            if (body !== undefined) {
+            if (body != null) {
               resolve(body);
             }
           });
@@ -69,7 +69,7 @@ export default class MessageHandler {
         return;
       }
 
-      if (img !== undefined) {
+      if (img != null) {
         // @ts-ignore
         const ext = getFileExtension(attachment.name);
         if (!MessageHandler.checkIfExtValid(ext.trim(), event.rows[0].restriction)) {

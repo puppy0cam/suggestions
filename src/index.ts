@@ -1,6 +1,6 @@
 import { CommandoClient } from 'discord.js-commando';
 import path from 'path';
-import { MessageReaction } from 'discord.js';
+import { MessageReaction, User } from 'discord.js';
 import { loadConfig } from './config/config';
 import MessageHandler from './handler/messagehandler';
 import ReactionHandler from './handler/reactionhandler';
@@ -46,7 +46,7 @@ bot.on('message', async (msg) => {
 
 bot.on('messageReactionAdd', async (reaction: MessageReaction, user) => {
   if (user === bot.user) return;
-  new ReactionHandler(reaction, user, bot);
+  new ReactionHandler(reaction, user as User, bot);
 });
 
 // login bot for given token
