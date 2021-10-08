@@ -1,0 +1,9 @@
+token: ''
+mute_role: '873033466734841926'
+prefix: '!'
+database:
+  user: 'postgres'
+  host: 'localhost'
+  database: 'postgres'
+  password: 'postgres'
+  port: 5432
