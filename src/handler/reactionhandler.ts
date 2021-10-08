@@ -31,7 +31,7 @@ export default class ReactionHandler {
 
     private async handleSubmissionReview() {
       const submission = await pool.query(
-        'SELECT e.submissions_channel_id, submission_id, user_id FROM anon_muting.submissions \
+        'SELECT e.submissions_channel_id, submission_id, user_id, publish_reactions FROM anon_muting.submissions \
             INNER JOIN anon_muting.events e on e.event_id = submissions.event_id \
             WHERE submissions.review_message_id = $1 AND e.review_channel_id = $2', [this.reaction.message.id, this.reaction.message.channel.id],
       );
@@ -75,9 +75,15 @@ export default class ReactionHandler {
           submissionEmbed.author = {
             name: 'Submission',
           };
-          await submissionsChannel.send(submissionEmbed);
+          const createdMessage = await submissionsChannel.send(submissionEmbed);
 
           approved = true;
+
+          const neededReactions = submission.rows[0].publish_reactions;
+          for (let i = 0; i < neededReactions.length; i++) {
+            const reaction = neededReactions[i];
+            await createdMessage.react(reaction);
+          }
           break;
 
         case '👎':
