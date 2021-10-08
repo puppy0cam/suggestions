@@ -64,3 +64,5 @@ create unique index if not exists submissions_review_message_id_uindex_2
 create unique index if not exists submissions_submission_id_uindex
     on anon_muting.submissions (submission_id);
 
+alter table anon_muting.events 
+  add column if not exists publish_reactions text[] not null default '{}';
