@@ -1,5 +1,5 @@
 token: ''
-mute_role: '873033466734841926'
+mute_role: ''
 prefix: '!'
 database:
   user: 'postgres'
